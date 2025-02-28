@@ -31,21 +31,21 @@ export default function Home() {
     <div className="flex min-h-screen flex-col">
       {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-14 items-center justify-between">
+        <div className="container flex h-14 max-w-full px-4 sm:px-6 items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-md bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
-              <Recycle className="h-5 w-5 text-white" />
+            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-gradient-to-br from-green-400 to-emerald-600 flex items-center justify-center">
+              <Recycle className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
             </div>
-            <span className="font-bold text-xl">CleanSweep</span>
+            <span className="font-bold text-lg sm:text-xl">CleanSweep</span>
           </div>
           <nav className="hidden md:flex gap-6">
             <Link href="#project-overview" className="text-sm font-medium hover:text-primary">
               Project Overview
             </Link>
           </nav>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center">
             <Link href="/whitepaper">
-              <Button className="bg-gradient-to-r from-green-400 to-emerald-600 hover:from-green-500 hover:to-emerald-700">
+              <Button className="text-xs sm:text-sm px-3 py-1 sm:px-4 sm:py-2 bg-gradient-to-r from-green-400 to-emerald-600 hover:from-green-500 hover:to-emerald-700">
                 View Whitepaper
               </Button>
             </Link>
@@ -55,31 +55,31 @@ export default function Home() {
 
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative overflow-hidden py-16 md:py-24">
+        <section className="relative overflow-hidden py-10 sm:py-16 md:py-24">
           <div className="absolute inset-0 bg-[url('/placeholder.svg?height=1080&width=1920')] bg-cover bg-center opacity-5"></div>
           <div className="absolute inset-0 bg-gradient-to-br from-green-50/30 via-transparent to-blue-50/30 dark:from-green-950/10 dark:to-blue-950/10"></div>
 
           {/* Pixelated Elements */}
-          <div className="absolute top-20 left-10 w-16 h-16 bg-green-400/20 rounded-lg rotate-12 animate-pulse hidden md:block"></div>
-          <div className="absolute bottom-20 right-10 w-24 h-24 bg-blue-400/20 rounded-lg -rotate-12 animate-pulse delay-700 hidden md:block"></div>
-          <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-yellow-400/20 rounded-lg rotate-45 animate-pulse delay-500 hidden md:block"></div>
+          <div className="absolute top-20 left-10 w-8 h-8 sm:w-16 sm:h-16 bg-green-400/20 rounded-lg rotate-12 animate-pulse hidden sm:block"></div>
+          <div className="absolute bottom-20 right-10 w-12 h-12 sm:w-24 sm:h-24 bg-blue-400/20 rounded-lg -rotate-12 animate-pulse delay-700 hidden sm:block"></div>
+          <div className="absolute top-1/3 right-1/4 w-8 h-8 sm:w-12 sm:h-12 bg-yellow-400/20 rounded-lg rotate-45 animate-pulse delay-500 hidden sm:block"></div>
 
-          <div className="container relative">
+          <div className="container relative px-4 sm:px-6 md:px-8">
             <div className="grid gap-8 md:grid-cols-2 items-center">
-              <div className="space-y-8 text-center md:text-left">
+              <div className="space-y-6 sm:space-y-8 text-center md:text-left">
                 <div>
-                  <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm mb-4">
+                  <div className="inline-block rounded-lg bg-muted px-3 py-1 text-xs sm:text-sm mb-3 sm:mb-4">
                     Web3 Sustainability Platform
                   </div>
-                  <h1 className="font-bold text-3xl sm:text-4xl md:text-6xl leading-tight tracking-tighter mb-4">
+                  <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-6xl leading-tight tracking-tighter mb-3 sm:mb-4">
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-700">
                       CleanSweep
                     </span>
                   </h1>
-                  <h2 className="font-bold text-2xl sm:text-3xl md:text-5xl leading-tight tracking-tighter mb-4">
+                  <h2 className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-5xl leading-tight tracking-tighter mb-3 sm:mb-4">
                     A Gamified Web3 Sustainability Platform
                   </h2>
-                  <p className="text-lg sm:text-xl text-muted-foreground">
+                  <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
                     Leveraging Reactive Network's technology to revolutionize sustainability through blockchain-powered
                     gamification.
                   </p>
@@ -88,7 +88,7 @@ export default function Home() {
                   <Link href="/whitepaper" className="w-full sm:w-auto">
                     <Button 
                       size="lg" 
-                      className="w-full bg-gradient-to-r from-green-400 to-emerald-600 hover:from-green-500 hover:to-emerald-700"
+                      className="w-full text-sm sm:text-base bg-gradient-to-r from-green-400 to-emerald-600 hover:from-green-500 hover:to-emerald-700"
                     >
                       View Whitepaper <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
@@ -96,8 +96,8 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="relative mt-8 md:mt-0 flex justify-center">
-                <div className="relative aspect-square w-[400px] overflow-hidden rounded-xl bg-muted p-2">
+              <div className="relative mt-6 sm:mt-8 md:mt-0 flex justify-center">
+                <div className="relative aspect-square w-full max-w-[300px] sm:max-w-[400px] overflow-hidden rounded-xl bg-muted p-2">
                   <Image
                     src="/assets/hero-preview.jpeg"
                     alt="CleanSweep Platform Preview"
@@ -118,7 +118,7 @@ export default function Home() {
 
         {/* Project Overview Section */}
         <section id="project-overview" className="py-16 bg-muted/50">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="max-w-3xl mx-auto text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">Project Overview</h2>
               <p className="text-lg text-muted-foreground">
@@ -180,7 +180,7 @@ export default function Home() {
 
         {/* Key Features Section */}
         <section className="py-20">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">Key Features</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -244,7 +244,7 @@ export default function Home() {
 
         {/* Technical Implementation Section */}
         <section id="technical-implementation" className="py-20 bg-muted/50">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">Technical Implementation</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -355,7 +355,7 @@ export default function Home() {
 
         {/* Reactive Network Integration */}
         <section id="reactive-integration" className="py-20">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">How CleanSweep Uses Reactive Network</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -601,7 +601,7 @@ export default function Home() {
 
         {/* Mini-Game & Real-World Integration */}
         <section className="py-20 bg-muted/50">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">Mini-Game & Real-World Integration</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -632,8 +632,7 @@ export default function Home() {
                     <h5 className="font-medium mb-2">Technical Implementation</h5>
                     <p className="text-sm">
                       Games utilize Reactive's event system to trigger on-chain rewards based on in-game achievements,
-                      creating a seamlesstrigger on-chain rewards based on in-game achievements, creating a seamless
-                      play-to-earn experience.
+                      creating a seamless play-to-earn experience.
                     </p>
                   </div>
                 </CardContent>
@@ -699,7 +698,7 @@ export default function Home() {
 
         {/* Funding Request Section */}
         <section id="funding" className="py-20">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">Funding Request</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -885,7 +884,7 @@ export default function Home() {
 
         {/* Value Proposition for Reactive Network */}
         <section className="py-20 bg-muted/50">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tighter mb-4">Value for Reactive Network</h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -959,7 +958,7 @@ export default function Home() {
 
         {/* Call to Action */}
         <section className="py-20">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-green-500 to-emerald-700">
               <div className="absolute inset-0 bg-[url('/placeholder.svg?height=600&width=1200')] bg-cover bg-center mix-blend-overlay opacity-20"></div>
 
@@ -1000,7 +999,7 @@ export default function Home() {
 
         {/* Footer */}
         <footer className="bg-muted py-6">
-          <div className="container">
+          <div className="container px-4 sm:px-6 md:px-8">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
                 <div className="flex items-center gap-2 mb-2">

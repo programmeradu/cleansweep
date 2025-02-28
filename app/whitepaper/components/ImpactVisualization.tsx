@@ -48,87 +48,125 @@ export function ImpactVisualization() {
   }, [])
 
   if (!isMounted) {
-    return <div className="h-[400px] bg-muted/20 animate-pulse rounded-lg"></div>
+    return <div className="h-[300px] sm:h-[400px] bg-muted/20 animate-pulse rounded-lg"></div>
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Impact & Adoption Metrics</CardTitle>
+    <Card className="overflow-hidden">
+      <CardHeader className="p-4 sm:p-6">
+        <CardTitle className="text-lg sm:text-xl">Environmental Impact Visualization</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="adoption">Adoption</TabsTrigger>
-            <TabsTrigger value="impact">Impact Distribution</TabsTrigger>
-            <TabsTrigger value="comparison">Sustainability Comparison</TabsTrigger>
+      <CardContent className="p-0">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="w-full grid grid-cols-3 rounded-none border-b">
+            <TabsTrigger value="adoption" className="text-xs sm:text-sm py-2 sm:py-3">Platform Adoption</TabsTrigger>
+            <TabsTrigger value="impact" className="text-xs sm:text-sm py-2 sm:py-3">Impact Distribution</TabsTrigger>
+            <TabsTrigger value="comparison" className="text-xs sm:text-sm py-2 sm:py-3">Sustainability Comparison</TabsTrigger>
           </TabsList>
           
-          <TabsContent value="adoption" className="pt-4">
-            <div className="h-[400px] w-full">
+          <TabsContent value="adoption" className="p-4 sm:p-6">
+            <div className="h-[300px] sm:h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={adoptionData}>
+                <LineChart
+                  data={adoptionData}
+                  margin={{
+                    top: 5,
+                    right: 5,
+                    left: 5,
+                    bottom: 5,
+                  }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="users" stroke="#3b82f6" name="Active Users" />
-                  <Line type="monotone" dataKey="challenges" stroke="#10b981" name="Completed Challenges" />
-                  <Line type="monotone" dataKey="rewards" stroke="#f59e0b" name="Rewards Distributed" />
+                  <XAxis 
+                    dataKey="name" 
+                    tick={{ fontSize: 12 }}
+                    tickMargin={10}
+                  />
+                  <YAxis 
+                    tick={{ fontSize: 12 }}
+                    tickFormatter={(value) => {
+                      if (value >= 1000) {
+                        return `${value / 1000}k`;
+                      }
+                      return value;
+                    }}
+                  />
+                  <Tooltip 
+                    formatter={(value) => [`${value.toLocaleString()}`, '']}
+                    labelStyle={{ fontSize: 12 }}
+                    contentStyle={{ fontSize: 12 }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: 12, paddingTop: 10 }} />
+                  <Line type="monotone" dataKey="users" stroke="#3b82f6" strokeWidth={2} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="challenges" stroke="#10b981" strokeWidth={2} activeDot={{ r: 6 }} />
+                  <Line type="monotone" dataKey="rewards" stroke="#f59e0b" strokeWidth={2} activeDot={{ r: 6 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-sm text-muted-foreground mt-4">
-              Projected growth of CleanSweep's user base, completed sustainability challenges, and rewards distributed over time.
-            </p>
           </TabsContent>
           
-          <TabsContent value="impact" className="pt-4">
-            <div className="h-[400px] w-full">
+          <TabsContent value="impact" className="p-4 sm:p-6">
+            <div className="h-[300px] sm:h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={impactData}
                     cx="50%"
                     cy="50%"
-                    labelLine={true}
-                    outerRadius={150}
+                    labelLine={false}
+                    outerRadius={80}
+                    innerRadius={40}
                     fill="#8884d8"
                     dataKey="value"
-                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                   >
                     {impactData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
                   </Pie>
-                  <Tooltip />
+                  <Tooltip 
+                    formatter={(value) => [`${value}%`, '']}
+                    labelStyle={{ fontSize: 12 }}
+                    contentStyle={{ fontSize: 12 }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: 12, paddingTop: 20 }} />
                 </PieChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-sm text-muted-foreground mt-4">
-              Distribution of environmental impact categories achieved through CleanSweep's gamified sustainability challenges.
-            </p>
           </TabsContent>
           
-          <TabsContent value="comparison" className="pt-4">
-            <div className="h-[400px] w-full">
+          <TabsContent value="comparison" className="p-4 sm:p-6">
+            <div className="h-[300px] sm:h-[400px]">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={comparisonData}>
+                <BarChart
+                  data={comparisonData}
+                  margin={{
+                    top: 5,
+                    right: 5,
+                    left: 5,
+                    bottom: 5,
+                  }}
+                >
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="carbon" name="Carbon Footprint" fill="#ef4444" />
-                  <Bar dataKey="engagement" name="User Engagement" fill="#10b981" />
-                  <Bar dataKey="cost" name="Implementation Cost" fill="#3b82f6" />
+                  <XAxis 
+                    dataKey="name" 
+                    tick={{ fontSize: 12 }}
+                    tickMargin={10}
+                  />
+                  <YAxis 
+                    tick={{ fontSize: 12 }}
+                  />
+                  <Tooltip 
+                    labelStyle={{ fontSize: 12 }}
+                    contentStyle={{ fontSize: 12 }}
+                  />
+                  <Legend wrapperStyle={{ fontSize: 12, paddingTop: 10 }} />
+                  <Bar name="Carbon Footprint" dataKey="carbon" fill="#ef4444" />
+                  <Bar name="User Engagement" dataKey="engagement" fill="#10b981" />
+                  <Bar name="Operational Cost" dataKey="cost" fill="#3b82f6" />
                 </BarChart>
               </ResponsiveContainer>
             </div>
-            <p className="text-sm text-muted-foreground mt-4">
-              Comparison between traditional sustainability programs and CleanSweep's gamified approach (lower values for carbon footprint and cost are better).
-            </p>
           </TabsContent>
         </Tabs>
       </CardContent>

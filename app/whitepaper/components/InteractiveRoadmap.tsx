@@ -113,129 +113,138 @@ export function InteractiveRoadmap() {
     }
   ]
   
-  const filteredItems = filter 
-    ? roadmapItems.filter(item => item.category === filter)
-    : roadmapItems
-  
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "completed": return "bg-emerald-500"
-      case "in-progress": return "bg-amber-500"
-      case "planned": return "bg-slate-500"
-      default: return "bg-slate-500"
+  // Filter items based on selected phase and category filter
+  const filteredItems = roadmapItems.filter(item => {
+    if (selectedPhase && `${item.quarter} ${item.year}` !== selectedPhase) {
+      return false
     }
-  }
-  
-  const getCategoryColor = (category: string) => {
-    switch (category) {
-      case "development": return "bg-blue-100 text-blue-800 hover:bg-blue-200 dark:bg-blue-900 dark:text-blue-300 dark:hover:bg-blue-800"
-      case "community": return "bg-purple-100 text-purple-800 hover:bg-purple-200 dark:bg-purple-900 dark:text-purple-300 dark:hover:bg-purple-800"
-      case "partnerships": return "bg-amber-100 text-amber-800 hover:bg-amber-200 dark:bg-amber-900 dark:text-amber-300 dark:hover:bg-amber-800"
-      case "technology": return "bg-emerald-100 text-emerald-800 hover:bg-emerald-200 dark:bg-emerald-900 dark:text-emerald-300 dark:hover:bg-emerald-800"
-      default: return "bg-slate-100 text-slate-800 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+    if (filter && item.category !== filter) {
+      return false
     }
-  }
-  
+    return true
+  })
+
+  // Get unique phases (quarter + year combinations)
+  const phases = Array.from(new Set(roadmapItems.map(item => `${item.quarter} ${item.year}`)))
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Interactive Roadmap</CardTitle>
-        <div className="flex flex-wrap gap-2 mt-2">
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div className="space-y-2">
+          <h3 className="text-xl sm:text-2xl font-bold">CleanSweep Roadmap</h3>
+          <p className="text-sm sm:text-base text-muted-foreground">
+            Our development timeline and milestones
+          </p>
+        </div>
+        
+        <div className="flex flex-wrap gap-2">
           <Badge 
-            variant="outline" 
-            className={`cursor-pointer ${filter === null ? 'bg-slate-100 dark:bg-slate-800' : ''}`}
+            className={`cursor-pointer px-2 py-1 text-xs ${filter === null ? 'bg-primary' : 'bg-secondary hover:bg-secondary/80'}`}
             onClick={() => setFilter(null)}
           >
             All
           </Badge>
           <Badge 
-            variant="outline" 
-            className={`cursor-pointer ${filter === 'development' ? getCategoryColor('development') : ''}`}
+            className={`cursor-pointer px-2 py-1 text-xs ${filter === 'development' ? 'bg-primary' : 'bg-secondary hover:bg-secondary/80'}`}
             onClick={() => setFilter('development')}
           >
             Development
           </Badge>
           <Badge 
-            variant="outline" 
-            className={`cursor-pointer ${filter === 'community' ? getCategoryColor('community') : ''}`}
+            className={`cursor-pointer px-2 py-1 text-xs ${filter === 'technology' ? 'bg-primary' : 'bg-secondary hover:bg-secondary/80'}`}
+            onClick={() => setFilter('technology')}
+          >
+            Technology
+          </Badge>
+          <Badge 
+            className={`cursor-pointer px-2 py-1 text-xs ${filter === 'community' ? 'bg-primary' : 'bg-secondary hover:bg-secondary/80'}`}
             onClick={() => setFilter('community')}
           >
             Community
           </Badge>
           <Badge 
-            variant="outline" 
-            className={`cursor-pointer ${filter === 'partnerships' ? getCategoryColor('partnerships') : ''}`}
+            className={`cursor-pointer px-2 py-1 text-xs ${filter === 'partnerships' ? 'bg-primary' : 'bg-secondary hover:bg-secondary/80'}`}
             onClick={() => setFilter('partnerships')}
           >
             Partnerships
           </Badge>
-          <Badge 
-            variant="outline" 
-            className={`cursor-pointer ${filter === 'technology' ? getCategoryColor('technology') : ''}`}
-            onClick={() => setFilter('technology')}
-          >
-            Technology
-          </Badge>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="relative">
-          {/* Timeline line */}
-          <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-slate-200 dark:bg-slate-700" />
-          
-          <div className="space-y-8">
-            {filteredItems.map((item) => (
-              <motion.div 
-                key={item.id}
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`relative pl-10 ${selectedPhase === item.id ? 'bg-slate-50 dark:bg-slate-800/50 p-4 rounded-lg -ml-4' : ''}`}
-                onClick={() => setSelectedPhase(selectedPhase === item.id ? null : item.id)}
-              >
-                {/* Timeline dot */}
-                <div className={`absolute left-0 top-1.5 w-8 h-8 rounded-full flex items-center justify-center ${getStatusColor(item.status)}`}>
-                  {item.icon}
-                </div>
-                
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <div>
-                    <h3 className="text-lg font-semibold">{item.title}</h3>
-                    <div className="flex items-center gap-2 mb-1">
-                      <Badge variant="outline" className={getCategoryColor(item.category)}>
-                        {item.category.charAt(0).toUpperCase() + item.category.slice(1)}
+      </div>
+      
+      {/* Timeline phases */}
+      <div className="relative">
+        <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2 z-0" />
+        
+        <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mb-8 relative z-10">
+          {phases.map((phase) => (
+            <Badge
+              key={phase}
+              className={`cursor-pointer px-3 py-1.5 text-xs sm:text-sm ${selectedPhase === phase ? 'bg-primary' : 'bg-secondary hover:bg-secondary/80'}`}
+              onClick={() => setSelectedPhase(selectedPhase === phase ? null : phase)}
+            >
+              {phase}
+            </Badge>
+          ))}
+        </div>
+        
+        {/* Timeline items */}
+        <div className="space-y-8 relative">
+          {filteredItems.map((item, index) => (
+            <motion.div
+              key={item.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className={`relative flex flex-col sm:flex-row items-start sm:items-center gap-4 ${
+                index % 2 === 0 ? 'sm:flex-row-reverse sm:text-right' : ''
+              }`}
+            >
+              <div className="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-border -translate-x-1/2 z-0 hidden sm:block" />
+              
+              <div className="flex-1 max-w-full sm:max-w-[calc(50%-2rem)]">
+                <Card className="overflow-hidden">
+                  <CardHeader className="p-4 sm:p-6">
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-2">
+                        <div className={`p-1.5 rounded-full 
+                          ${item.status === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' : 
+                            item.status === 'in-progress' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' : 
+                            'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'}`}
+                        >
+                          {item.icon}
+                        </div>
+                        <CardTitle className="text-base sm:text-lg">{item.title}</CardTitle>
+                      </div>
+                      <Badge className={`
+                        ${item.status === 'completed' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' : 
+                          item.status === 'in-progress' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' : 
+                          'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'}`}
+                      >
+                        {item.status}
                       </Badge>
-                      <span className="text-sm text-muted-foreground">
-                        {item.quarter} {item.year}
-                      </span>
                     </div>
-                  </div>
-                  
-                  <Badge variant={item.status === "completed" ? "default" : "outline"} className={
-                    item.status === "completed" ? "bg-emerald-500" : 
-                    item.status === "in-progress" ? "text-amber-500 border-amber-500" : 
-                    "text-slate-500 border-slate-500"
-                  }>
-                    {item.status === "completed" ? "Completed" : 
-                     item.status === "in-progress" ? "In Progress" : 
-                     "Planned"}
-                  </Badge>
+                  </CardHeader>
+                  <CardContent className="p-4 sm:p-6 pt-0">
+                    <p className="text-sm sm:text-base text-muted-foreground">{item.description}</p>
+                  </CardContent>
+                </Card>
+              </div>
+              
+              <div className="flex items-center justify-center z-10 mt-2 sm:mt-0">
+                <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
+                  {item.status === 'completed' ? (
+                    <CheckCircle2 className="h-4 w-4" />
+                  ) : (
+                    <span className="text-xs font-bold">{item.id}</span>
+                  )}
                 </div>
-                
-                {(selectedPhase === item.id) && (
-                  <motion.div 
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    className="mt-2 text-muted-foreground"
-                  >
-                    {item.description}
-                  </motion.div>
-                )}
-              </motion.div>
-            ))}
-          </div>
+              </div>
+              
+              <div className="flex-1 hidden sm:block" />
+            </motion.div>
+          ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   )
 }
