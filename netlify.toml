@@ -1,9 +1,14 @@
 [build]
-  command = "npm run build"
+  command = "NODE_OPTIONS='--max_old_space_size=4096' npm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18.18.0"
+  NODE_ENV = "production"
+  NEXT_TELEMETRY_DISABLED = "1"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+[functions]
+  included_files = ["node_modules/@next/swc-linux-x64-gnu/**/*"]
