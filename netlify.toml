@@ -1,19 +1,21 @@
 [build]
-  command = "npm ci && NODE_OPTIONS='--max_old_space_size=4096' npm run build"
+  command = "npm install && npm install autoprefixer postcss tailwindcss --save-dev && NODE_OPTIONS='--max_old_space_size=4096' npm run build"
   publish = ".next"
 
 [build.environment]
   NODE_VERSION = "18.18.0"
   NODE_ENV = "production"
   NEXT_TELEMETRY_DISABLED = "1"
-  NEXT_SHARP_PATH = "/opt/build/repo/node_modules/sharp"
-  NEXT_PRIVATE_LOCAL_WEBPACK = "true"
+  NEXT_PUBLIC_ASSET_PREFIX = "."
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [functions]
+  node_bundler = "esbuild"
   included_files = [
     "node_modules/@next/swc-linux-x64-gnu/**/*",
-    "node_modules/sharp/**/*"
+    "node_modules/autoprefixer/**/*",
+    "node_modules/postcss/**/*",
+    "node_modules/tailwindcss/**/*"
   ]
