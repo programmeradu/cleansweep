@@ -1,5 +1,5 @@
 [build]
-  command = "npm install && npm install autoprefixer postcss tailwindcss --save-dev && NODE_OPTIONS='--max_old_space_size=4096' npm run build"
+  command = "npm install autoprefixer postcss tailwindcss && npm run build"
   publish = ".next"
 
 [build.environment]
